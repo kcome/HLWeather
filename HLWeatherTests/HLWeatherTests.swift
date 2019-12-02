@@ -81,6 +81,15 @@ class HLWeatherTests: XCTestCase {
         XCTAssertNil(sf2?.wdgr)
         XCTAssertNil(sf2?.humidity)
         XCTAssertNil(sf2?.pressure)
+        // test save and load
+        sf2?.save()
+        let mr = StationForecast.mostRecent()
+        XCTAssertNotNil(mr)
+        XCTAssertEqual(mr?.temp, 292.83999999999997)
+        // test load recent without presaved value
+        let KEY_RECENT = "MostRecent"
+        UserDefaults.standard.removeObject(forKey: KEY_RECENT)
+        XCTAssertNil(StationForecast.mostRecent())
     }
     
     func testForecastLoader() {

@@ -28,8 +28,15 @@ class HLWeatherUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        app.buttons["🔍 Search"].tap()
+        sleep(2)
+        app.searchFields.element.tap()
+        // search button is hidden by search bar
+        XCTAssertEqual(app.buttons["🔍 Search"].isHittable, false)
+        app.searchFields.element.typeText("\n")
+        sleep(2)
+        // search button is unhidden by closing search bar
+        XCTAssertEqual(app.buttons["🔍 Search"].isHittable, true)
     }
 
     func testLaunchPerformance() {
